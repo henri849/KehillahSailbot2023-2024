@@ -16,3 +16,14 @@ Kilograms
 
 ### Time:
 Seconds
+
+## Synthesized units:
+Just use combinations of previously defined units.  
+Examples:
+1. Velocity: m/s
+2. Force: Newtons which are Kg*m/s^2
+3. Surface area: m^2
+4. Volume: m^3
+5. Density: kg/m^3
+6. Angular velocity: Radiants per second
+7. Torque: Newton-meter
