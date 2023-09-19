@@ -1,4 +1,10 @@
 import tests
 
 if __name__ == "__main__":
-	tests.test_all()
+	fails = tests.test_all()
+	for epic_fail in fails:
+		print(str(epic_fail))
+
+
+def my_func():
+	return 13
