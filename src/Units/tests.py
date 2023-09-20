@@ -30,5 +30,5 @@ class Testing(unittest.TestCase):
         self.assertAlmostEqual(Unit.Duration(8, 'minutes').value, 480)
         self.assertAlmostEqual(Unit.Duration(-1, 'seconds').value, -1)
 
-
-unittest.main()
+if __name__ == "__main__":
+    unittest.main()
