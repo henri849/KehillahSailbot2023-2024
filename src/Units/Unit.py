@@ -13,9 +13,9 @@ class Angle(Measurement):
     # All angles are converted to radians on construction
     def __init__(self, _value, _unit):
         self.rates = {
+            'radians': 1,
             'degrees': math.pi / 180,
-            'gradians': math.pi / 200,
-            'radians': 1
+            'gradians': math.pi / 200
         }
         super().__init__(_value * self.rates[_unit.lower()])
 
