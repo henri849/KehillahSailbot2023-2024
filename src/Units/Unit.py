@@ -5,6 +5,9 @@ class Measurement(object):
     def __init__(self, _value):
         self.value = _value
 
+    def get_value(self):
+        return self.value
+
 
 class Angle(Measurement):
     # All angles are converted to radians on construction
