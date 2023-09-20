@@ -50,6 +50,8 @@ class Distance(Measurement):
         self.rates = {
             'meters': 1,
             'feet': 1/3.280839895,
+            'miles': 5280/3.280839895,
+            'nautical miles': 1852,
             'inches': 1/3.280839895/12,
             'cubits': 0.4572
         }
