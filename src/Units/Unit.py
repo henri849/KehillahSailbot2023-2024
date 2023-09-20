@@ -8,6 +8,26 @@ class Measurement(object):
     def get_value(self):
         return self.value
 
+    def __eq__(self, other):
+        assert type(self) == type(other), "Attempted comparison across types."
+        return self.value == other.value
+
+    def __gt__(self, other):
+        assert type(self) == type(other), "Attempted comparison across types."
+        return self.value > other.value
+
+    def __lt__(self, other):
+        assert type(self) == type(other), "Attempted comparison across types."
+        return self.value < other.value
+
+    def __ge__(self, other):
+        assert type(self) == type(other), "Attempted comparison across types."
+        return self.value >= other.value
+
+    def __le__(self, other):
+        assert type(self) == type(other), "Attempted comparison across types."
+        return self.value <= other.value
+
 
 class Angle(Measurement):
     # All angles are converted to radians on construction
