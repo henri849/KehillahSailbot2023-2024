@@ -36,7 +36,6 @@ class Testing(unittest.TestCase):
         self.assertEqual(Unit.Duration(1.5, 'minutes').get_as('seconds'), 90)
         self.assertEqual(Unit.Duration(-1, 'seconds').get_as('seconds'), -1)
 
-
     def test_distance_constructor(self):
         self.assertAlmostEqual(Unit.Distance(0, 'meters').value, 0)
         self.assertAlmostEqual(Unit.Distance(2, 'feet').value, 0.6096)

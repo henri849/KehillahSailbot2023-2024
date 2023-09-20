@@ -6,6 +6,26 @@ class Measurement(object):
         self.rates = _rates
         self.value = _value
 
+    def __eq__(self, other):
+        assert type(self) == type(other), "Attempted comparison across types."
+        return self.value == other.value
+
+    def __gt__(self, other):
+        assert type(self) == type(other), "Attempted comparison across types."
+        return self.value > other.value
+
+    def __lt__(self, other):
+        assert type(self) == type(other), "Attempted comparison across types."
+        return self.value < other.value
+
+    def __ge__(self, other):
+        assert type(self) == type(other), "Attempted comparison across types."
+        return self.value >= other.value
+
+    def __le__(self, other):
+        assert type(self) == type(other), "Attempted comparison across types."
+        return self.value <= other.value
+
     def get_value(self):
         return self.value
 
@@ -34,7 +54,6 @@ class Distance(Measurement):
             'cubits': 0.4572
         }
         super().__init__(_value * self.rates[_unit.lower()], self.rates)
-
 
 
 class Duration(Measurement):
