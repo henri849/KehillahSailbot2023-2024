@@ -2,31 +2,15 @@ import math
 
 
 class Measurement(object):
-    def __init__(self, _value):
+    def __init__(self, _value, _rates):
+        self.rates = _rates
         self.value = _value
 
     def get_value(self):
         return self.value
 
-    def __eq__(self, other):
-        assert type(self) == type(other), "Attempted comparison across types."
-        return self.value == other.value
-
-    def __gt__(self, other):
-        assert type(self) == type(other), "Attempted comparison across types."
-        return self.value > other.value
-
-    def __lt__(self, other):
-        assert type(self) == type(other), "Attempted comparison across types."
-        return self.value < other.value
-
-    def __ge__(self, other):
-        assert type(self) == type(other), "Attempted comparison across types."
-        return self.value >= other.value
-
-    def __le__(self, other):
-        assert type(self) == type(other), "Attempted comparison across types."
-        return self.value <= other.value
+    def get_as(self, unit):
+        return self.value / self.rates[unit.lower()]
 
 
 class Angle(Measurement):
@@ -37,7 +21,7 @@ class Angle(Measurement):
             'degrees': math.pi / 180,
             'gradians': math.pi / 200
         }
-        super().__init__(_value * self.rates[_unit.lower()])
+        super().__init__(_value * self.rates[_unit.lower()], self.rates)
 
 
 class Distance(Measurement):
@@ -49,7 +33,8 @@ class Distance(Measurement):
             'inches': 1/3.280839895/12,
             'cubits': 0.4572
         }
-        super().__init__(_value * self.rates[_unit.lower()])
+        super().__init__(_value * self.rates[_unit.lower()], self.rates)
+
 
 
 class Duration(Measurement):
@@ -59,4 +44,4 @@ class Duration(Measurement):
             'seconds': 1,
             'minutes': 60,
         }
-        super().__init__(_value * self.rates[_unit.lower()])
+        super().__init__(_value * self.rates[_unit.lower()], self.rates)
