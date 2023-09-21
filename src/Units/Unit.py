@@ -2,40 +2,37 @@ import math
 
 
 class Measurement(object):
-    def __init__(self, _value, _rates):
+    def __init__(self, _value: float, _rates: dict) -> None:
         self.rates = _rates
         self.value = _value
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         assert type(self) == type(other), "Attempted comparison across types."
         return self.value == other.value
 
-    def __gt__(self, other):
+    def __gt__(self, other) -> bool:
         assert type(self) == type(other), "Attempted comparison across types."
         return self.value > other.value
 
-    def __lt__(self, other):
+    def __lt__(self, other) -> bool:
         assert type(self) == type(other), "Attempted comparison across types."
         return self.value < other.value
 
-    def __ge__(self, other):
+    def __ge__(self, other) -> bool:
         assert type(self) == type(other), "Attempted comparison across types."
         return self.value >= other.value
 
-    def __le__(self, other):
+    def __le__(self, other) -> bool:
         assert type(self) == type(other), "Attempted comparison across types."
         return self.value <= other.value
 
-    def get_value(self):
-        return self.value
-
-    def get_as(self, unit):
+    def get_as(self, unit: str) -> float:
         return self.value / self.rates[unit.lower()]
 
 
 class Angle(Measurement):
     # All angles are converted to radians on construction
-    def __init__(self, _value, _unit):
+    def __init__(self, _value: float, _unit: str) -> None:
         self.rates = {
             'radians': 1,
             'degrees': math.pi / 180,
@@ -46,7 +43,7 @@ class Angle(Measurement):
 
 class Distance(Measurement):
     # All distances are converted to meters on construction
-    def __init__(self, _value, _unit):
+    def __init__(self, _value: float, _unit: str) -> None:
         self.rates = {
             'meters': 1,
             'feet': 1/3.280839895,
@@ -60,7 +57,7 @@ class Distance(Measurement):
 
 class Duration(Measurement):
     # All durations are converted to seconds on construction
-    def __init__(self, _value, _unit):
+    def __init__(self, _value, _unit) -> None:
         self.rates = {
             'seconds': 1,
             'minutes': 60,
