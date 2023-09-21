@@ -63,3 +63,15 @@ class Duration(Measurement):
             'minutes': 60,
         }
         super().__init__(_value * self.rates[_unit.lower()], self.rates)
+
+
+class Position(object):
+    center = () # Tuple of Angles: (Latitude, longitude)
+
+    @staticmethod
+    def set_center(latitude:Angle, longitude:Angle)->None:
+        # TODO: add conversion
+        Position.center = (latitude, longitude)
+
+    def __init__(self, relativeX:Distance):
+        self.rates = {}
