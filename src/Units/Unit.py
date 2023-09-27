@@ -1,6 +1,5 @@
 import math
 
-
 class Measurement(object):
     def __init__(self, _value: float, _rates: dict) -> None:
         self.rates = _rates
@@ -40,6 +39,13 @@ class Angle(Measurement):
         }
         super().__init__(_value * self.rates[_unit.lower()], self.rates)
 
+    def __add__(self, other):
+        assert type(self) == type(other), "Attempted addition across types."
+        return Angle(self.get_as("radians") + other.get_as("radians"), "radians")
+
+    def __sub__(self, other):
+        assert type(self) == type(other), "Attempted subtraction across types."
+        return Angle(self.get_as("radians") - other.get_as("radians"), "radians")
 
 class Distance(Measurement):
     # All distances are converted to meters on construction
@@ -54,16 +60,30 @@ class Distance(Measurement):
         }
         super().__init__(_value * self.rates[_unit.lower()], self.rates)
 
+    def __add__(self, other):
+        assert type(self) == type(other), "Attempted addition across types."
+        return Angle(self.get_as("meters") + other.get_as("meters"), "meters")
+
+    def __sub__(self, other):
+        assert type(self) == type(other), "Attempted subtraction across types."
+        return Angle(self.get_as("meters") - other.get_as("meters"), "meters")
 
 class Duration(Measurement):
     # All durations are converted to seconds on construction
-    def __init__(self, _value, _unit) -> None:
+    def __init__(self, _value, _unit:str) -> None:
         self.rates = {
             'seconds': 1,
             'minutes': 60,
         }
         super().__init__(_value * self.rates[_unit.lower()], self.rates)
 
+    def __add__(self, other):
+        assert type(self) == type(other), "Attempted addition across types."
+        return Angle(self.get_as("seconds") + other.get_as("seconds"), "seconds")
+
+    def __sub__(self, other):
+        assert type(self) == type(other), "Attempted subtraction across types."
+        return Angle(self.get_as("seconds") - other.get_as("seconds"), "seconds")
 
 class Position(object):
     center = () # Tuple of Angles: (Latitude, longitude)

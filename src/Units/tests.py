@@ -64,6 +64,23 @@ class Testing(unittest.TestCase):
         self.assertEqual(Unit.Duration(1.5, 'minutes').get_as('seconds'), 90)
         self.assertEqual(Unit.Duration(-1, 'seconds').get_as('seconds'), -1)
 
+    def test_measurement_comparison(self):
+        self.assertTrue(Unit.Duration(0, 'seconds') == Unit.Duration(0, 'seconds'))
+        self.assertRaises(AssertionError, Unit.Duration(0, 'seconds').__eq__, Unit.Angle(0, 'gradians'))
+        self.assertFalse(Unit.Distance(10, 'meters') > Unit.Distance(20, 'meters'))
+        self.assertTrue(Unit.Angle(10, 'gradians') <= Unit.Angle(10, 'degrees'))
+        self.assertTrue(Unit.Duration(10, 'minutes') >= Unit.Duration(10, 'seconds'))
+
+    def test_measurement_arithmetic_operators(self):
+        self.assertEqual((Unit.Distance(1, "meters") + Unit.Distance(1, "meters")).get_as("meters"), 2)
+        self.assertEqual((Unit.Duration(20, "seconds") + Unit.Distance(40, "seconds")).get_as("minutes"), 1)
+        self.assertAlmostEqual(Unit.Angle(5, "radians") + Unit.Angle(2, "radians").get_as("radians"), 7)
+        self.assertEqual((Unit.Distance(1, "meters") + Unit.Distance(1, "meters") + Unit.Distance(1, "meters")).get_as("meters"), 3)
+        self.assertEqual((Unit.Distance(1, "meters") - Unit.Distance(1, "meters")).get_as("meters"), 0)
+        self.assertEqual((Unit.Duration(20, "seconds") - Unit.Distance(40, "seconds")).get_as("minutes"), -20)
+        self.assertAlmostEqual(Unit.Angle(5, "radians") - Unit.Angle(2, "radians").get_as("radians"), 3)
+        self.assertEqual((Unit.Distance(1, "meters") - Unit.Distance(1, "meters") + Unit.Distance(1, "meters")).get_as("meters"), 1)
+
 
 if __name__ == "__main__":
     unittest.main()
