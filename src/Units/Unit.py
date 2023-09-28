@@ -40,6 +40,14 @@ class Angle(Measurement):
         }
         super().__init__(_value * self.rates[_unit.lower()], self.rates)
 
+    def __add__(self, other):
+        assert type(self) == type(other), "Attempted addition across types."
+        return Angle(self.get_as("radians") + other.get_as("radians"), "radians")
+
+    def __sub__(self, other):
+        assert type(self) == type(other), "Attempted subtraction across types."
+        return Angle(self.get_as("radians") - other.get_as("radians"), "radians")
+
 
 class Distance(Measurement):
     # All distances are converted to meters on construction
@@ -54,25 +62,37 @@ class Distance(Measurement):
         }
         super().__init__(_value * self.rates[_unit.lower()], self.rates)
 
+    def __add__(self, other):
+        assert type(self) == type(other), "Attempted addition across types."
+        return Angle(self.get_as("meters") + other.get_as("meters"), "meters")
+
+    def __sub__(self, other):
+        assert type(self) == type(other), "Attempted subtraction across types."
+        return Angle(self.get_as("meters") - other.get_as("meters"), "meters")
+
 
 class Duration(Measurement):
     # All durations are converted to seconds on construction
-    def __init__(self, _value, _unit) -> None:
+    def __init__(self, _value: float, _unit: str) -> None:
         self.rates = {
             'seconds': 1,
             'minutes': 60,
         }
         super().__init__(_value * self.rates[_unit.lower()], self.rates)
 
-        
+    def __add__(self, other):
+        assert type(self) == type(other), "Attempted addition across types."
+        return Angle(self.get_as("seconds") + other.get_as("seconds"), "seconds")
+
+    def __sub__(self, other):
+        assert type(self) == type(other), "Attempted subtraction across types."
+        return Angle(self.get_as("seconds") - other.get_as("seconds"), "seconds")
+
+
 class GlobalPosition(object):
     def __init__(self, _longitude: Angle, _latitude: Angle) -> None:
         self.longitude = _longitude
         self.latitude = _latitude
-
-    def __eq__(self, other):
-        assert type(other) == GlobalPosition
-        return self.longitude == other.longitude and self.latitude == other.latitude
 
 
 class RelativePosition(object):
