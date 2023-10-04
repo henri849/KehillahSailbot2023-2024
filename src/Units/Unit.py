@@ -1,5 +1,6 @@
 import math
 
+
 class Measurement(object):
     def __init__(self, _value: float, _rates: dict) -> None:
         self.rates = _rates
@@ -47,6 +48,7 @@ class Angle(Measurement):
         assert type(self) == type(other), "Attempted subtraction across types."
         return Angle(self.get_as("radians") - other.get_as("radians"), "radians")
 
+
 class Distance(Measurement):
     # All distances are converted to meters on construction
     def __init__(self, _value: float, _unit: str) -> None:
@@ -68,9 +70,10 @@ class Distance(Measurement):
         assert type(self) == type(other), "Attempted subtraction across types."
         return Angle(self.get_as("meters") - other.get_as("meters"), "meters")
 
+
 class Duration(Measurement):
     # All durations are converted to seconds on construction
-    def __init__(self, _value, _unit:str) -> None:
+    def __init__(self, _value: float, _unit: str) -> None:
         self.rates = {
             'seconds': 1,
             'minutes': 60,
@@ -85,13 +88,35 @@ class Duration(Measurement):
         assert type(self) == type(other), "Attempted subtraction across types."
         return Angle(self.get_as("seconds") - other.get_as("seconds"), "seconds")
 
-class Position(object):
-    center = () # Tuple of Angles: (Latitude, longitude)
 
-    @staticmethod
-    def set_center(latitude:Angle, longitude:Angle)->None:
-        # TODO: add conversion
-        Position.center = (latitude, longitude)
+class GlobalPosition(object):
+    def __init__(self, _longitude: Angle, _latitude: Angle) -> None:
+        self.longitude = _longitude
+        self.latitude = _latitude
 
-    def __init__(self, relativeX:Distance):
-        self.rates = {}
+
+class RelativePosition(object):
+    def __init__(self, _system, _x: Distance, _y: Distance):
+        self.system = _system
+        self.x = _x
+        self.y = _y
+
+    def __eq__(self, other):
+        return self.system == other.system and self.x == other.x and self.y == other.y
+
+    # Uses the pythagorean theorem to calculate distance in meters.
+    def distance_to(self, other) -> Distance:
+        assert self.system == other.system
+        return Distance(math.sqrt((self.x.get_as('meters') - other.x.get_as('meters')) * (self.x.get_as('meters') - other.x.get_as('meters')) +
+                                  (self.y.get_as('meters') - other.y.get_as('meters')) * (self.y.get_as('meters') - other.y.get_as('meters'))), 'meters')
+
+
+class CartesianSystem(object):
+    def __init__(self, _center: GlobalPosition):
+        self.center = _center
+
+    def __eq__(self, other):
+        return self.center == other.center
+
+    def point(self, x: Distance, y: Distance) -> RelativePosition:
+        return RelativePosition(self, x, y)

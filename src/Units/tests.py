@@ -1,5 +1,6 @@
 import unittest
 import Unit
+import math
 
 
 class Testing(unittest.TestCase):
@@ -63,6 +64,32 @@ class Testing(unittest.TestCase):
         self.assertEqual(Unit.Duration(60, 'seconds').get_as('minutes'), 1)
         self.assertEqual(Unit.Duration(1.5, 'minutes').get_as('seconds'), 90)
         self.assertEqual(Unit.Duration(-1, 'seconds').get_as('seconds'), -1)
+
+    def test_global_position_constructor(self):
+        self.assertEqual(Unit.GlobalPosition(Unit.Angle(0, 'degrees'), Unit.Angle(0, 'radians')),
+                         Unit.GlobalPosition(Unit.Angle(0, 'gradians'), Unit.Angle(0, 'radians')))
+        self.assertEqual(Unit.GlobalPosition(Unit.Angle(1, 'degrees'), Unit.Angle(0, 'radians')),
+                         Unit.GlobalPosition(Unit.Angle(1, 'degrees'), Unit.Angle(0, 'radians')))
+
+    def test_cartesian_system_constructor(self):
+        self.assertEqual(Unit.CartesianSystem(Unit.GlobalPosition(Unit.Angle(2.54, 'radians'), Unit.Angle(2.54, 'radians'))),
+                         Unit.CartesianSystem(Unit.GlobalPosition(Unit.Angle(2.54, 'radians'), Unit.Angle(2.54, 'radians'))))
+
+    def test_relative_position_constructor(self):
+        sys = Unit.CartesianSystem(Unit.GlobalPosition(Unit.Angle(0, 'radians'), Unit.Angle(0, 'gradians')))
+        self.assertEqual(Unit.RelativePosition(sys, Unit.Distance(2, 'meters'), Unit.Distance(0, 'cubits')),
+                         Unit.RelativePosition(sys, Unit.Distance(2, 'meters'), Unit.Distance(0, 'nautical miles')))
+
+    def test_cartesian_system_point(self):
+        sys = Unit.CartesianSystem(Unit.GlobalPosition(Unit.Angle(0, 'radians'), Unit.Angle(0, 'gradians')))
+        self.assertEqual(sys.point(Unit.Distance(0, 'cubits'), Unit.Distance(3, 'meters')),
+                         sys.point(Unit.Distance(0, 'cubits'), Unit.Distance(3, 'meters')))
+
+    def test_relative_position_distance_to(self):
+        sys = Unit.CartesianSystem(Unit.GlobalPosition(Unit.Angle(0, 'radians'), Unit.Angle(0, 'gradians')))
+        p1 = sys.point(Unit.Distance(1, 'meters'), Unit.Distance(1, 'meters'))
+        p2 = sys.point(Unit.Distance(0, 'meters'), Unit.Distance(0, 'meters'))
+        self.assertAlmostEqual(p1.distance_to(p2).value, math.sqrt(2))
 
     def test_measurement_comparison(self):
         self.assertTrue(Unit.Duration(0, 'seconds') == Unit.Duration(0, 'seconds'))
