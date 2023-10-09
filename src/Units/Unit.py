@@ -94,6 +94,10 @@ class GlobalPosition(object):
         self.longitude = _longitude
         self.latitude = _latitude
 
+    def __eq__(self, other):
+        assert type(self) == type(other), "Attempted comparison across types."
+        return self.longitude == other.longitude and self.latitude == other.latitude
+
 
 class RelativePosition(object):
     def __init__(self, _system, _x: Distance, _y: Distance):
