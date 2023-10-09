@@ -82,11 +82,11 @@ class Duration(Measurement):
 
     def __add__(self, other):
         assert type(self) == type(other), "Attempted addition across types."
-        return Angle(self.get_as("seconds") + other.get_as("seconds"), "seconds")
+        return Duration(self.get_as("seconds") + other.get_as("seconds"), "seconds")
 
     def __sub__(self, other):
         assert type(self) == type(other), "Attempted subtraction across types."
-        return Angle(self.get_as("seconds") - other.get_as("seconds"), "seconds")
+        return Duration(self.get_as("seconds") - other.get_as("seconds"), "seconds")
 
 
 class GlobalPosition(object):
