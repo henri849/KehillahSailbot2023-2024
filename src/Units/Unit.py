@@ -64,11 +64,11 @@ class Distance(Measurement):
 
     def __add__(self, other):
         assert type(self) == type(other), "Attempted addition across types."
-        return Angle(self.get_as("meters") + other.get_as("meters"), "meters")
+        return Distance(self.get_as("meters") + other.get_as("meters"), "meters")
 
     def __sub__(self, other):
         assert type(self) == type(other), "Attempted subtraction across types."
-        return Angle(self.get_as("meters") - other.get_as("meters"), "meters")
+        return Distance(self.get_as("meters") - other.get_as("meters"), "meters")
 
 
 class Duration(Measurement):
