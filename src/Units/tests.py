@@ -104,8 +104,8 @@ class Testing(unittest.TestCase):
         self.assertAlmostEqual((Unit.Angle(5, "radians") + Unit.Angle(2, "radians")).get_as("radians"), 7)
         self.assertEqual((Unit.Distance(1, "meters") + Unit.Distance(1, "meters") + Unit.Distance(1, "meters")).get_as("meters"), 3)
         self.assertEqual((Unit.Distance(1, "meters") - Unit.Distance(1, "meters")).get_as("meters"), 0)
-        self.assertEqual((Unit.Duration(20, "seconds") - Unit.Distance(40, "seconds")).get_as("minutes"), -20)
-        self.assertAlmostEqual(Unit.Angle(5, "radians") - Unit.Angle(2, "radians").get_as("radians"), 3)
+        self.assertEqual((Unit.Duration(20, "seconds") - Unit.Duration(40, "seconds")).get_as("seconds"), -20)
+        self.assertAlmostEqual((Unit.Angle(5, "radians") - Unit.Angle(2, "radians")).get_as("radians"), 3)
         self.assertEqual((Unit.Distance(1, "meters") - Unit.Distance(1, "meters") + Unit.Distance(1, "meters")).get_as("meters"), 1)
 
 
