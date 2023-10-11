@@ -30,6 +30,13 @@ class Testing(unittest.TestCase):
         self.assertAlmostEqual(Unit.Duration(8, 'minutes').value, 480)
         self.assertAlmostEqual(Unit.Duration(-1, 'seconds').value, -1)
 
+    def test_velocity_constructor(self):
+        self.assertAlmostEqual(Unit.Velocity(1, 'meters/second').value, 1)
+        self.assertAlmostEqual(Unit.Velocity(1, 'nautical miles/second').value, 1852)
+        self.assertAlmostEqual(Unit.Velocity(3.280839895, 'feet/second').value, 1)
+        self.assertAlmostEqual(Unit.Velocity(10, 'inches/second').value, 0.254)
+        self.assertAlmostEqual(Unit.Velocity(10, 'cubits/minute').value, 0.0762)
+
     def test_measurement_comparison(self):
         self.assertTrue(Unit.Duration(0, 'seconds') == Unit.Duration(0, 'seconds'))
         self.assertRaises(AssertionError, Unit.Duration(0, 'seconds').__eq__, Unit.Angle(0, 'gradians'))  # duration - angle, eq

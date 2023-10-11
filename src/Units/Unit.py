@@ -77,6 +77,7 @@ class Duration(Measurement):
         self.rates = {
             'seconds': 1,
             'minutes': 60,
+            'fortnight': 1209600
         }
         super().__init__(_value * self.rates[_unit.lower()], self.rates)
 
@@ -87,6 +88,39 @@ class Duration(Measurement):
     def __sub__(self, other):
         assert type(self) == type(other), "Attempted subtraction across types."
         return Duration(self.get_as("seconds") - other.get_as("seconds"), "seconds")
+
+class Velocity(Measurement):
+    def __init__(self, _value: float, _unit: str):
+        self.rates = {
+            'meters/second': 1,
+            'feet/second': 1/3.280839895,
+            'miles/second': 5280/3.280839895,
+            'nautical miles/second': 1852,
+            'inches/second': 1/3.280839895/12,
+            'cubits/second': 0.4572,
+            'meters/minute': 1 / 60,
+            'feet/minute': 1 / 60 / 3.280839895,
+            'miles/minute': 5280 / 60 / 3.280839895,
+            'nautical miles/minute': 1852 / 60,
+            'inches/minute': 1 / 60 / 3.280839895 / 12,
+            'cubits/minute': 0.4572 / 60,
+            'meters/fortnight': 1 / 1209600,
+            'feet/fortnight': 1 / 1209600 / 3.280839895,
+            'miles/fortnight': 5280 * 1209600 / 3.280839895,
+            'nautical miles/fortnight': 1852 / 1209600,
+            'inches/fortnight': 1 / 1209600 / 3.280839895 / 12,
+            'cubits/fortnight': 0.4572 / 1209600
+        }
+
+        super().__init__(_value * self.rates[_unit.lower()], self.rates)
+
+    def __add__(self, other):
+        assert type(self) == type(other), "Attempted addition across types."
+        return Velocity(self.get_as("meters/second") + other.get_as("meters/second"), "meters/second")
+
+    def __sub__(self, other):
+        assert type(self) == type(other), "Attempted subtraction across types."
+        return Velocity(self.get_as("meters/second") - other.get_as("meters/second"), "meters/second")
 
 
 class Mass(Measurement):
