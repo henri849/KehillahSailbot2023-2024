@@ -32,11 +32,11 @@ class Testing(unittest.TestCase):
 
     def test_measurement_comparison(self):
         self.assertTrue(Unit.Duration(0, 'seconds') == Unit.Duration(0, 'seconds'))
-        self.assertRaises(AssertionError, Unit.Duration(0, 'seconds').__eq__, Unit.Angle(0, 'gradians')) #duration - angle, eq
-        self.assertRaises(AssertionError, Unit.Angle(0, 'radians').__gt__, Unit.Duration(0, 'minutes')) #angle - duration , gt
-        self.assertRaises(AssertionError, Unit.Duration(0, 'seconds').__lt__, Unit.Distance(0, 'feet')) #duration - distance, lt
-        self.assertRaises(AssertionError, Unit.Distance(0, 'cubits').__ge__, Unit.Duration(0, 'seconds')) #distance - duration, ge
-        self.assertRaises(AssertionError, Unit.Distance(0, 'miles').__le__, Unit.Angle(0, 'degrees')) # distance - angle, le
+        self.assertRaises(AssertionError, Unit.Duration(0, 'seconds').__eq__, Unit.Angle(0, 'gradians'))  # duration - angle, eq
+        self.assertRaises(AssertionError, Unit.Angle(0, 'radians').__gt__, Unit.Duration(0, 'minutes'))  # angle - duration , gt
+        self.assertRaises(AssertionError, Unit.Duration(0, 'seconds').__lt__, Unit.Distance(0, 'feet'))  # duration - distance, lt
+        self.assertRaises(AssertionError, Unit.Distance(0, 'cubits').__ge__, Unit.Duration(0, 'seconds'))  # distance - duration, ge
+        self.assertRaises(AssertionError, Unit.Distance(0, 'miles').__le__, Unit.Angle(0, 'degrees'))  # distance - angle, le
         self.assertFalse(Unit.Distance(10, 'meters') > Unit.Distance(20, 'meters'))
         self.assertTrue(Unit.Angle(10, 'gradians') <= Unit.Angle(10, 'degrees'))
         self.assertTrue(Unit.Duration(10, 'minutes') >= Unit.Duration(10, 'seconds'))
@@ -65,6 +65,10 @@ class Testing(unittest.TestCase):
         self.assertEqual(Unit.Duration(1.5, 'minutes').get_as('seconds'), 90)
         self.assertEqual(Unit.Duration(-1, 'seconds').get_as('seconds'), -1)
 
+    def test_mass_get_as(self):
+        self.assertEqual(Unit.Mass(0, 'pounds').get_as('kilograms'), 0)
+        self.assertEqual(Unit.Mass(1, 'kilogram').get_as('gram'), 1000)
+
     def test_global_position_constructor(self):
         self.assertEqual(Unit.GlobalPosition(Unit.Angle(0, 'degrees'), Unit.Angle(0, 'radians')),
                          Unit.GlobalPosition(Unit.Angle(0, 'gradians'), Unit.Angle(0, 'radians')))
@@ -90,13 +94,6 @@ class Testing(unittest.TestCase):
         p1 = sys.point(Unit.Distance(1, 'meters'), Unit.Distance(1, 'meters'))
         p2 = sys.point(Unit.Distance(0, 'meters'), Unit.Distance(0, 'meters'))
         self.assertAlmostEqual(p1.distance_to(p2).value, math.sqrt(2))
-
-    def test_measurement_comparison(self):
-        self.assertTrue(Unit.Duration(0, 'seconds') == Unit.Duration(0, 'seconds'))
-        self.assertRaises(AssertionError, Unit.Duration(0, 'seconds').__eq__, Unit.Angle(0, 'gradians'))
-        self.assertFalse(Unit.Distance(10, 'meters') > Unit.Distance(20, 'meters'))
-        self.assertTrue(Unit.Angle(10, 'gradians') <= Unit.Angle(10, 'degrees'))
-        self.assertTrue(Unit.Duration(10, 'minutes') >= Unit.Duration(10, 'seconds'))
 
     def test_measurement_arithmetic_operators(self):
         self.assertEqual((Unit.Distance(1, "meters") + Unit.Distance(1, "meters")).get_as("meters"), 2)

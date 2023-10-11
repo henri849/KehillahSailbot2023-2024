@@ -89,6 +89,24 @@ class Duration(Measurement):
         return Duration(self.get_as("seconds") - other.get_as("seconds"), "seconds")
 
 
+class Mass(Measurement):
+    def __init__(self, _value: float, _unit: str) -> None:
+        self.rates = {
+            'kilograms': 1,
+            'pounds': 0.45359237,
+            'grams': 0.001
+        }
+        super().__init__(_value * self.rates[_unit.lower()], self.rates)
+
+    def __add__(self, other):
+        assert type(self) == type(other), "Attempted comparison across types."
+        return Mass(self.value + other.value, "kilograms")
+
+    def __sub__(self, other):
+        assert type(self) == type(other), "Attempted comparison across types."
+        return Mass(self.value - other.value, "kilograms")
+
+
 class GlobalPosition(object):
     def __init__(self, _longitude: Angle, _latitude: Angle) -> None:
         self.longitude = _longitude
