@@ -74,7 +74,7 @@ class Testing(unittest.TestCase):
 
     def test_mass_get_as(self):
         self.assertEqual(Unit.Mass(0, 'pounds').get_as('kilograms'), 0)
-        self.assertEqual(Unit.Mass(1, 'kilogram').get_as('gram'), 1000)
+        self.assertEqual(Unit.Mass(1, 'kilograms').get_as('grams'), 1000)
 
     def test_global_position_constructor(self):
         self.assertEqual(Unit.GlobalPosition(Unit.Angle(0, 'degrees'), Unit.Angle(0, 'radians')),
